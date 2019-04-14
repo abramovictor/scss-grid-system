@@ -1,0 +1,14 @@
+body {
+    background-color: #000000;
+    color: #ffffff;
+
+    @media (min-width: 1200px) {
+        background-color: lime;
+    }
+
+    h1 {
+        @media (min-width: 1200px) {
+            color: red;
+        }
+    }
+}
