@@ -118,7 +118,7 @@ function html() {
                 })
             })
         )
-        .pipe(dest(joinPath(folder.build)))
+        .pipe(dest(folder.build))
         .pipe(stream());
 }
 
@@ -128,6 +128,6 @@ function watcher() {
 }
 
 export const clear = remove;
+export const build = series(clear, stylesBuild, html);
 export const dev = parallel(series(stylesDev, html), watcher, server);
-export const build = series(remove, stylesBuild, html);
 export default series(clear, dev);
