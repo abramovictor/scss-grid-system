@@ -5,7 +5,7 @@ import csso from 'gulp-csso';
 import autoprefixer from 'gulp-autoprefixer';
 import { init, stream } from 'browser-sync';
 import hash from 'gulp-hash-filename';
-import mediaQueries from 'gulp-group-css-media-queries';
+import mediaQueriesGroup from 'gulp-group-css-media-queries';
 import template from 'gulp-template';
 import { sync } from 'del';
 import tap from 'gulp-tap';
@@ -25,11 +25,14 @@ const filename = {
         if (!this.store[key]) this.store[key] = [];
         this.store[key].push(name);
     },
-
     get(key = String.prototype, callbackfn = Function.prototype) {
         if (!this.store[key]) return null;
         let result = callbackfn(this.store[key]);
         return result ? result : this.store[key];
+    },
+    clear(key = String.prototype) {
+        if (!this.store[key]) return null;
+        this.store[key].length = 0;
     }
 };
 
@@ -50,9 +53,11 @@ const path = {
     }
 };
 
-function remove(done) {
-    sync(folder.build);
-    done();
+function remove(path) {
+    return (done) => {
+        sync(path);
+        done();
+    };
 }
 
 function server() {
@@ -78,7 +83,7 @@ function stylesBuild() {
                 cascade: false
             })
         )
-        .pipe(mediaQueries())
+        .pipe(mediaQueriesGroup())
         .pipe(csso())
         .pipe(
             hash({
@@ -127,7 +132,7 @@ function watcher() {
     watch(joinPath(folder.src, path.html.watch), series(html));
 }
 
-export const clear = remove;
+export const clear = remove(folder.build);
 export const build = series(clear, stylesBuild, html);
 export const dev = parallel(series(stylesDev, html), watcher, server);
 export default series(clear, dev);
