@@ -3,7 +3,7 @@ import plumber from 'gulp-plumber';
 import sass, { logError } from 'gulp-sass';
 import csso from 'gulp-csso';
 import autoprefixer from 'gulp-autoprefixer';
-import { init, stream } from 'browser-sync';
+import { init, stream, reload } from 'browser-sync';
 import hash from 'gulp-hash-filename';
 import mediaQueriesGroup from 'gulp-group-css-media-queries';
 import template from 'gulp-template';
@@ -60,7 +60,7 @@ const path = {
 };
 
 function remove(path = String.prototype) {
-    return (done = Function.prototype) => {
+    return function clear(done = Function.prototype) {
         sync(path);
         done();
     };
@@ -73,6 +73,27 @@ function server() {
             notify: true
         }
     });
+}
+
+function html() {
+    return src(joinPath(folder.src, path.html.src))
+        .pipe(
+            template({
+                styles: filename.get('styles', files => {
+                    let link = '';
+
+                    files.forEach(file => {
+                        link += `<link rel="stylesheet" href="${joinPath(
+                            path.styles.build,
+                            file
+                        )}">`;
+                    });
+
+                    return link;
+                })
+            })
+        )
+        .pipe(dest(folder.build));
 }
 
 function styles() {
@@ -96,13 +117,23 @@ function stylesBuild() {
                 format: '{name}.{hash}{ext}'
             })
         )
-        .pipe(tap(({ basename }) => filename.set('styles', basename)))
+        .pipe(
+            tap(({ basename }) => {
+                filename.set('styles', basename);
+                html();
+            })
+        )
         .pipe(dest(joinPath(folder.build, path.styles.build)));
 }
 
 function stylesDev() {
     return styles()
-        .pipe(tap(({ basename }) => filename.set('styles', basename)))
+        .pipe(
+            tap(({ basename }) => {
+                filename.set('styles', basename);
+                html();
+            })
+        )
         .pipe(
             dest(joinPath(folder.build, path.styles.build), {
                 sourcemaps: true
@@ -111,34 +142,12 @@ function stylesDev() {
         .pipe(stream());
 }
 
-function html() {
-    return src(joinPath(folder.src, path.html.src))
-        .pipe(
-            template({
-                styles: filename.get('styles', files => {
-                    let link = '';
-
-                    files.forEach(file => {
-                        link += `<link rel="stylesheet" href="${joinPath(
-                            path.styles.build,
-                            file
-                        )}">`;
-                    });
-
-                    return link;
-                })
-            })
-        )
-        .pipe(dest(folder.build))
-        .pipe(stream());
-}
-
 function watcher() {
     watch(joinPath(folder.src, path.styles.watch), series(stylesDev));
-    watch(joinPath(folder.src, path.html.watch), series(html));
+    watch(joinPath(folder.src, path.html.watch), reload);
 }
 
-export const clear = remove(folder.build);
-export const build = series(clear, stylesBuild, html);
-export const dev = parallel(series(stylesDev, html), watcher, server);
-export default series(clear, dev);
+export const removeBuild = remove(folder.build);
+export const build = series(removeBuild, stylesBuild);
+export const dev = parallel(series(stylesDev), watcher, server);
+export default series(removeBuild, dev);
