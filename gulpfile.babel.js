@@ -19,20 +19,26 @@ function joinPath(...path) {
 }
 
 const filename = {
-    store: {},
+    _store: {},
 
     set(key = String.prototype, name = String.prototype) {
-        if (!this.store[key]) this.store[key] = [];
-        this.store[key].push(name);
+        if (!this._store[key]) return (this._store[key] = [name]);
+
+        this._store[key] = this._store[key].filter(item => {
+            if (item !== name) return item;
+        });
+
+        return this._store[key].push(name);
     },
     get(key = String.prototype, callbackfn = Function.prototype) {
-        if (!this.store[key]) return null;
-        let result = callbackfn(this.store[key]);
-        return result ? result : this.store[key];
+        if (!this._store[key]) return null;
+        let result = callbackfn(this._store[key]);
+        return result ? result : this._store[key];
     },
     clear(key = String.prototype) {
-        if (!this.store[key]) return null;
-        this.store[key].length = 0;
+        if (!this._store[key]) return null;
+        this._store[key].length = 0;
+        return true;
     }
 };
 
@@ -53,8 +59,8 @@ const path = {
     }
 };
 
-function remove(path) {
-    return (done) => {
+function remove(path = String.prototype) {
+    return (done = Function.prototype) => {
         sync(path);
         done();
     };
