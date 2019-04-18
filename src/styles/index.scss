@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'columns';
+
+.col-3 {
+    @include column(12, $breakpoint-lg) {
+        background-color: #ffffff;
+    };
+}
+
+.col-auto {
+    @include column-auto($breakpoint-lg);
+}

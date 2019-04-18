@@ -99,7 +99,7 @@ function html() {
 function styles() {
     return src(joinPath(folder.src, path.styles.src), { sourcemaps: true })
         .pipe(plumber())
-        .pipe(sass().on('error', logError));
+        .pipe(sass());
 }
 
 function stylesBuild() {

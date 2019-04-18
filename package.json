@@ -44,7 +44,6 @@
         "gulp-plumber": "^1.2.1",
         "gulp-sass": "^4.0.2",
         "gulp-tap": "^1.0.1",
-        "gulp-debug": "^4.0.0",
         "gulp-template": "^5.0.0"
     }
 }

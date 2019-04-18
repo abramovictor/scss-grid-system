@@ -1,0 +1,16 @@
+$mobile-first: true;
+
+/**
+ * Breakpoins
+ */
+$breakpoint-xl: 1200px;
+$breakpoint-lg: 992px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 576px;
+
+/**
+ * Columns
+ */
+$gutter-width: 30px;
+$gutter-side-width: $gutter-width / 2;
+$max-number-of-columns: 12;

@@ -1,0 +1,53 @@
+@import 'variables';
+@import 'media-queries';
+@import 'functions';
+
+
+@mixin column-base($no-gutters: false) {
+    min-height: 1%;
+
+    @if $no-gutters == false {
+        margin-left: $gutter-side-width;
+        margin-right: $gutter-side-width;
+    }
+}
+
+@mixin column-auto($breakpoint: false, $no-gutters: false) {
+    @include column-base($no-gutters);
+
+    @if $breakpoint == false {
+        width: auto;
+    } @else {
+        @include media($breakpoint) {
+            width: auto;
+            @content;
+        }
+    }
+}
+
+@mixin column-grow($breakpoint: false, $no-gutters: false) {
+    @include column-base($no-gutters);
+    width: 1%;
+
+    @if $breakpoint == false {
+        flex-grow: 1;
+    } @else {
+        @include media($breakpoint) {
+            flex-grow: 1;
+            @content;
+        }
+    }
+}
+
+@mixin column($number-of-columns: $max-number-of-columns, $breakpoint: false, $no-gutters: false) {
+    @include column-base($no-gutters);
+
+    @if $breakpoint == false {
+        width: column-width($number-of-columns, $no-gutters);
+    } @else {
+        @include media($breakpoint) {
+            width: column-width($number-of-columns, $no-gutters);
+            @content;
+        }
+    }
+}
