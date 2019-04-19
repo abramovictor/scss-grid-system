@@ -4,10 +4,12 @@
  * Сalculates column width
  */
 @function column-width($number-of-columns: $max-number-of-columns, $no-gutters: false) {
+    $width: 100% / $number-of-columns;
+
     @if $no-gutters == false {
         $column-width: calc(100% - #{$gutter-width});
         @if $number-of-columns < $max-number-of-columns {
-            $column-width: calc(100% / #{$number-of-columns} - #{$gutter-width});
+            $column-width: calc($width - #{$gutter-width});
         }
         
         @return $column-width;
@@ -15,7 +17,7 @@
     
     $column-width: 100%;
     @if $number-of-columns < $max-number-of-columns {
-        $column-width: calc(100% / #{$number-of-columns});
+        $column-width: $width;
     }
     
     @return $column-width;
