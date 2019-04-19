@@ -1,12 +1,22 @@
 $mobile-first: true;
 
 /**
- * Breakpoins
+ * Breakpoints
  */
 $breakpoint-xl: 1200px;
 $breakpoint-lg: 992px;
 $breakpoint-md: 768px;
 $breakpoint-sm: 576px;
+
+/**
+ * Breakpoints short name
+ */
+$breakpoints: (
+    (xl, $breakpoint-xl),
+    (lg, $breakpoint-lg),
+    (md, $breakpoint-md),
+    (sm, $breakpoint-sm)
+);
 
 /**
  * Columns

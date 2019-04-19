@@ -6,30 +6,40 @@
 @function column-width($number-of-columns: $max-number-of-columns, $no-gutters: false) {
     $width: 100% / $number-of-columns;
 
-    @if $no-gutters == false {
+    @if $no-gutters==false {
         $column-width: calc(100% - #{$gutter-width});
+
         @if $number-of-columns < $max-number-of-columns {
             $column-width: calc($width - #{$gutter-width});
         }
-        
+
         @return $column-width;
     }
-    
+
     $column-width: 100%;
+
     @if $number-of-columns < $max-number-of-columns {
         $column-width: $width;
     }
-    
+
     @return $column-width;
 }
 
 /**
  * Defines the logic of the media query
  */
-@function media-logic($breakpoin) {
-    @if $mobile-first == true {
-        @return screen and (min-width: $breakpoin);
+@function media-logic($point) {
+    $width2: $point;
+
+    @each $breakpoint, $width in $breakpoints {
+        @if $breakpoint == $point{
+            
+        }
     }
 
-    @return screen and (max-width: $breakpoin);
+    @if $mobile-first==true {
+        @return screen and (min-width: $breakpoint);
+    }
+
+    @return screen and (max-width: $breakpoint);
 }
