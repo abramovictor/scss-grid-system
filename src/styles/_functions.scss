@@ -1,45 +1,37 @@
-@import 'variables';
+@import 'settings';
 
 /**
  * Сalculates column width
  */
-@function column-width($number-of-columns: $max-number-of-columns, $no-gutters: false) {
-    $width: 100% / $number-of-columns;
-
-    @if $no-gutters==false {
-        $column-width: calc(100% - #{$gutter-width});
-
-        @if $number-of-columns < $max-number-of-columns {
-            $column-width: calc($width - #{$gutter-width});
-        }
-
-        @return $column-width;
-    }
-
-    $column-width: 100%;
+@function column-width($number-of-columns: $max-number-of-columns, $gutters: true) {
+    $width: 100%;
 
     @if $number-of-columns < $max-number-of-columns {
-        $column-width: $width;
+        $width: 100% / $max-number-of-columns * $number-of-columns;
     }
 
-    @return $column-width;
+    @if $gutters == true and $gutters-type == margin {
+        @return calc(#{$width} - #{$gutters-width});
+    }
+
+    @return $width;
 }
 
 /**
  * Defines the logic of the media query
  */
 @function media-logic($point) {
-    $width2: $point;
+    $media-width: $point;
 
     @each $breakpoint, $width in $breakpoints {
-        @if $breakpoint == $point{
-            
+        @if $breakpoint == $point {
+            $media-width: $width;
         }
     }
 
-    @if $mobile-first==true {
-        @return screen and (min-width: $breakpoint);
+    @if $mobile-first == true {
+        @return screen and (min-width: $media-width);
     }
 
-    @return screen and (max-width: $breakpoint);
+    @return screen and (max-width: $media-width);
 }

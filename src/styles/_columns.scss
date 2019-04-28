@@ -1,52 +1,57 @@
-@import 'variables';
-@import 'media-queries';
+@import 'settings';
 @import 'functions';
+@import 'media-queries';
 
-
-@mixin column-base($no-gutters: false) {
-    min-height: 1%;
-
-    @if $no-gutters == false {
-        margin-left: $gutter-side-width;
-        margin-right: $gutter-side-width;
+@mixin column($gutters: true) {
+    @if $gutters == true {
+        #{$gutters-type}-left: $gutters-side-width;
+        #{$gutters-type}-right: $gutters-side-width;
     }
+
+    min-height: 1px;
+    @content;
 }
 
-@mixin column-auto($breakpoint: false, $no-gutters: false) {
-    @include column-base($no-gutters);
-
+@mixin column-auto($breakpoint: false) {
     @if $breakpoint == false {
         width: auto;
+        flex-basis: auto;
+        max-width: none;
     } @else {
         @include media($breakpoint) {
             width: auto;
+            flex-basis: auto;
+            max-width: none;
             @content;
         }
     }
 }
 
-@mixin column-grow($breakpoint: false, $no-gutters: false) {
-    @include column-base($no-gutters);
-    width: 1%;
-
+@mixin column-grow($breakpoint: false) {
     @if $breakpoint == false {
         flex-grow: 1;
+        flex-basis: 0;
+        max-width: 100%;
     } @else {
         @include media($breakpoint) {
             flex-grow: 1;
+            flex-basis: 0;
+            max-width: 100%;
             @content;
         }
     }
 }
 
-@mixin column($number-of-columns: $max-number-of-columns, $breakpoint: false, $no-gutters: false) {
-    @include column-base($no-gutters);
-
+@mixin column-of($number-of-columns: $max-number-of-columns, $breakpoint: false, $gutters: true) {
     @if $breakpoint == false {
-        width: column-width($number-of-columns, $no-gutters);
+        max-width: column-width($number-of-columns, $gutters);
+        flex-basis: column-width($number-of-columns, $gutters);
+        flex-grow: 0;
     } @else {
         @include media($breakpoint) {
-            width: column-width($number-of-columns, $no-gutters);
+            max-width: column-width($number-of-columns, $gutters);
+            flex-basis: column-width($number-of-columns, $gutters);
+            flex-grow: 0;
             @content;
         }
     }

@@ -83,10 +83,7 @@ function html() {
                     let link = '';
 
                     files.forEach(file => {
-                        link += `<link rel="stylesheet" href="${joinPath(
-                            path.styles.build,
-                            file
-                        )}">`;
+                        link += `<link rel="stylesheet" href="${joinPath(path.styles.build, file)}">`;
                     });
 
                     return link;
@@ -120,7 +117,6 @@ function stylesBuild() {
         .pipe(
             tap(({ basename }) => {
                 filename.set('styles', basename);
-                html();
             })
         )
         .pipe(dest(joinPath(folder.build, path.styles.build)));
@@ -131,7 +127,6 @@ function stylesDev() {
         .pipe(
             tap(({ basename }) => {
                 filename.set('styles', basename);
-                html();
             })
         )
         .pipe(
@@ -143,11 +138,11 @@ function stylesDev() {
 }
 
 function watcher() {
-    watch(joinPath(folder.src, path.styles.watch), series(stylesDev));
+    watch(joinPath(folder.src, path.styles.watch), series(stylesDev, html));
     watch(joinPath(folder.src, path.html.watch), reload);
 }
 
 export const removeBuild = remove(folder.build);
 export const build = series(removeBuild, stylesBuild);
-export const dev = parallel(series(stylesDev), watcher, server);
+export const dev = parallel(series(stylesDev, html), watcher, server);
 export default series(removeBuild, dev);

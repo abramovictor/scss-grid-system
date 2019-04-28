@@ -1,0 +1,26 @@
+$mobile-first: false;
+
+$gutters-type: margin;
+$gutters-width: 30px;
+$gutters-side-width: $gutters-width / 2;
+$max-number-of-columns: 12;
+
+
+/**
+ * Breakpoints
+ */
+$breakpoint-width-xl: 1200px;
+$breakpoint-width-lg: 992px;
+$breakpoint-width-md: 768px;
+$breakpoint-width-sm: 576px;
+
+
+/**
+ * Breakpoints short name
+ */
+$breakpoints: (
+    1: (xl, $breakpoint-width-xl),
+    2: (lg, $breakpoint-width-lg),
+    3: (md, $breakpoint-width-md),
+    4: (sm, $breakpoint-width-sm)
+);
