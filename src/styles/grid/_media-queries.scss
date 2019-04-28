@@ -1,0 +1,7 @@
+@import 'functions';
+
+@mixin media($props) {
+    @media #{media-logic($props)} {
+        @content;
+    }
+}

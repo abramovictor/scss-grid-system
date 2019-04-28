@@ -1,0 +1,35 @@
+@import 'settings';
+@import 'functions';
+@import 'media-queries';
+
+@mixin container($fluid: false) {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $gutters-side-width;
+    padding-right: $gutters-side-width;
+
+    @if $fluid == false {
+        $prev-width: null;
+
+        @if $mobile-first == true {
+            @each $point, $width in mapReverse($breakpoints) {
+                @include media($point) {
+                    max-width: $width - $gutters-width;
+                }
+            }
+        } @else {
+            @each $point, $width in $breakpoints {
+                @if $width == $breakpoint-max {
+                    max-width: $width;
+                } @else {
+                    @include media($prev-width) {
+                        max-width: $width - $gutters-width;
+                    }
+                }
+
+                $prev-width: $width;
+            }
+        }
+    }
+}

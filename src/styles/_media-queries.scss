@@ -1,7 +1,0 @@
-@import 'functions';
-
-@mixin media($breakpoint) {
-    @media #{media-logic($breakpoint)} {
-        @content;
-    }
-}

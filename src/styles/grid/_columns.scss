@@ -43,7 +43,7 @@
 }
 
 @mixin column-of($number-of-columns: $max-number-of-columns, $breakpoint: false, $gutters: true) {
-    @if $breakpoint == false {
+    @if $breakpoint == false or $breakpoint == null {
         max-width: column-width($number-of-columns, $gutters);
         flex-basis: column-width($number-of-columns, $gutters);
         flex-grow: 0;

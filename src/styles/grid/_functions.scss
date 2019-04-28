@@ -1,0 +1,61 @@
+@import 'settings';
+
+// Сalculates column width
+@function column-width($number-of-columns: $max-number-of-columns, $gutters: true) {
+    $width: 100%;
+
+    @if $number-of-columns < $max-number-of-columns {
+        $width: 100% / $max-number-of-columns * $number-of-columns;
+    }
+
+    @if $gutters == true and $gutters-type == margin {
+        @return calc(#{$width} - #{$gutters-width});
+    }
+
+    @return $width;
+}
+
+// Defines the logic of the media query
+@function media-logic($props) {
+    $media-width: $props;
+
+    @each $point, $width in $breakpoints {
+        @if $point == $props {
+            $media-width: $width;
+        }
+    }
+
+    @if $mobile-first == true {
+        @return screen and (min-width: $media-width);
+    }
+
+    @return screen and (max-width: $media-width);
+}
+
+@function mapReverse($map) {
+    $result: null;
+
+    @if type-of($map) == 'map' {
+        $keys: map-keys($map);
+        $map-reversed: ();
+
+        @for $i from length($keys) through 1 {
+            $map-reversed: map-merge(
+                $map-reversed,
+                (
+                    nth($keys, $i): map-get($map, nth($keys, $i))
+                )
+            );
+        }
+
+        @if type-of($map-reversed) == 'map' {
+            $result: $map-reversed;
+        } @else {
+            @warn 'There was an error reversing the order of "#{$map}"';
+        }
+    } @else {
+        @warn '"#{$map}" is not a valid map';
+    }
+
+    @return $result;
+}

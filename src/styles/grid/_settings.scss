@@ -1,0 +1,16 @@
+$mobile-first: false;
+
+$gutters-type: margin;
+$gutters-width: 30px;
+$gutters-side-width: $gutters-width / 2;
+$max-number-of-columns: 12;
+
+$breakpoints: (
+    xl: 1200px,
+    lg: 992px,
+    md: 768px,
+    sm: 576px
+);
+
+$breakpoint-max: 1200px;
+$breakpoint-min: 576px;

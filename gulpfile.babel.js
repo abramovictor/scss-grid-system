@@ -1,6 +1,6 @@
 import { src, dest, series, watch, parallel } from 'gulp';
 import plumber from 'gulp-plumber';
-import sass, { logError } from 'gulp-sass';
+import sass from 'gulp-sass';
 import csso from 'gulp-csso';
 import autoprefixer from 'gulp-autoprefixer';
 import { init, stream, reload } from 'browser-sync';
@@ -59,6 +59,11 @@ const path = {
     }
 };
 
+function reloadBrowser(done) {
+    reload();
+    done();
+}
+
 function remove(path = String.prototype) {
     return function clear(done = Function.prototype) {
         sync(path);
@@ -77,6 +82,7 @@ function server() {
 
 function html() {
     return src(joinPath(folder.src, path.html.src))
+        .pipe(plumber())
         .pipe(
             template({
                 styles: filename.get('styles', files => {
@@ -95,7 +101,6 @@ function html() {
 
 function styles() {
     return src(joinPath(folder.src, path.styles.src), { sourcemaps: true })
-        .pipe(plumber())
         .pipe(sass());
 }
 
@@ -139,10 +144,12 @@ function stylesDev() {
 
 function watcher() {
     watch(joinPath(folder.src, path.styles.watch), series(stylesDev, html));
-    watch(joinPath(folder.src, path.html.watch), reload);
+    watch(joinPath(folder.src, path.html.watch), series(html, reloadBrowser));
 }
 
+console.log(joinPath(folder.src, path.html.watch));
+
 export const removeBuild = remove(folder.build);
-export const build = series(removeBuild, stylesBuild);
+export const build = series(removeBuild, stylesBuild, html);
 export const dev = parallel(series(stylesDev, html), watcher, server);
 export default series(removeBuild, dev);
