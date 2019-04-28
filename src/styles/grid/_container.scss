@@ -3,15 +3,15 @@
 @import 'media-queries';
 
 @mixin container($fluid: false) {
-    width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-left: $gutters-side-width;
     padding-right: $gutters-side-width;
 
     @if $fluid == false {
-        $prev-width: null;
+        width: 100%;
 
+        $prev-width: null;
         @if $mobile-first == true {
             @each $point, $width in mapReverse($breakpoints) {
                 @include media($point) {
