@@ -1,5 +1,8 @@
 @import 'grid/index';
 
+$gutters-type: margin; // default parameter
+$mobile-first: true; // default parameter
+
 @include normalize;
 
 .container {
@@ -9,9 +12,6 @@
 // .container {
 //     @include container($fluid: true);
 // }
-
-$gutters-type: margin; // default parameter
-$mobile-first: true; // default parameter
 
 .row {
     @include row;
