@@ -2,13 +2,13 @@
 @import 'functions';
 @import 'media-queries';
 
-@mixin container($fluid: false) {
+@mixin container($full-width: false) {
     margin-left: auto;
     margin-right: auto;
     padding-left: $gutters-side-width;
     padding-right: $gutters-side-width;
 
-    @if $fluid == false {
+    @if $full-width == false {
         width: 100%;
 
         $prev-width: null;
@@ -31,5 +31,18 @@
                 $prev-width: $width;
             }
         }
+    }
+}
+
+@mixin make-container {
+    $container: map-get($classnames, container);
+    $separator: map-get($classnames, separator);
+    $full-width: map-get($classnames, full-width);
+
+    .#{$container} {
+        @include container;
+    }
+    .#{$container}#{$separator}#{$full-width} {
+        @include container(true);
     }
 }

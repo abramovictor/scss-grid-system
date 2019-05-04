@@ -11,5 +11,12 @@ $breakpoints: (
     md: 768px,
     sm: 576px
 );
-
 $breakpoint-max: map-get($breakpoints, xl);
+
+$classnames: (
+    container: 'container',
+    full-width: 'full-width',
+    row: 'row',
+    column: 'column',
+    separator: '--'
+);

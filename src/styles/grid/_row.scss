@@ -9,3 +9,9 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+@mixin make-row {
+    .#{map-get($classnames, row)} {
+        @include row;
+    }
+}

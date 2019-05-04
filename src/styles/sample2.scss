@@ -1,0 +1,105 @@
+@import 'grid/index';
+
+$gutters-type: padding; // default parameter
+$mobile-first: true; // default parameter
+
+@include normalize;
+
+.container {
+    @include container;
+}
+
+// .container {
+//     @include container($fluid: true);
+// }
+
+.row {
+    @include row;
+    justify-content: center;
+    @include media(xl) {
+        justify-content: unset;
+    }
+}
+
+.item {
+    @include column() {
+        @include size-of(12);
+        @include size-of(9, sm);
+        @include size-of(6, md);
+        @include size-of(4, lg);
+        @include size-of(3, xl);
+    }
+}
+
+// no gutters
+// .item {
+//     background-color: lime;
+//     @include column(false) {
+//         @include size-of(12, false, false);
+//         @include size-of(9, sm, false);
+//         @include size-of(6, md, false);
+//         @include size-of(4, lg, false);
+//         @include size-of(3, xl, false);
+//     }
+// }
+
+// media content
+// .item {
+//     background-color: lime;
+//     @include column() {
+//         @include size-of(12);
+
+//         @include size-of(9, sm) {
+//             background-color: limegreen;
+//         }
+//         @include size-of(6, md) {
+//             background-color: green;
+//         }
+//         @include size-of(4, lg) {
+//             background-color: tomato;
+//         }
+//         @include size-of(3, xl) {
+//             background-color: red;
+//         }
+//     }
+// }
+
+// $gutters-type: padding;
+// *,
+// *::before,
+// *::after {
+//     box-sizing: border-box;
+// }
+
+// $mobile-first: false;
+// .row {
+//     @include row;
+//     @include media(xl) {
+//         justify-content: center;
+//     }
+// }
+
+// .item {
+//     background-color: lime;
+//     @include column() {
+//         @include size-of(3) {
+//             // media content
+//             background-color: limegreen;
+//         }
+//         @include size-of(4, xl) {
+//             // media content
+//             background-color: green;
+//         }
+//         @include size-of(6, lg) {
+//             // media content
+//             background-color: tomato;
+//         }
+//         @include size-of(9, md) {
+//             // media content
+//             background-color: red;
+//         }
+//         @include size-of(12, sm) {
+//             // media content
+//         }
+//     }
+// }
