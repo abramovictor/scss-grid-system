@@ -56,3 +56,19 @@
         }
     }
 }
+
+@mixin make-column {
+    @include column;
+    
+    $size: 1;
+    @each $breakpoint in $breakpoints {
+        @include size-auto($breakpoint);
+        @include size-grow($breakpoint);
+
+        @while ($max-number-of-columns > $size) {
+            @include size-of($size, $breakpoint);
+        }
+
+        $size: $size + 1;
+    }
+}

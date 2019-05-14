@@ -1,4 +1,7 @@
 @import 'container';
-
+@import 'row';
+@import 'columns';
 
 @include make-container;
+@include make-row;
+@include make-column;
