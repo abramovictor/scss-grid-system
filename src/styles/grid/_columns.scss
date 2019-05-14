@@ -3,7 +3,7 @@
 @import 'media-queries';
 
 @mixin column($gutters: true) {
-    @if $gutters == true {
+    @if $gutters==true {
         #{$gutters-type}-left: $gutters-side-width;
         #{$gutters-type}-right: $gutters-side-width;
     }
@@ -13,11 +13,13 @@
 }
 
 @mixin size-auto($breakpoint: false) {
-    @if $breakpoint == false {
+    @if $breakpoint==false {
         width: auto;
         flex-basis: auto;
         max-width: none;
-    } @else {
+    }
+
+    @else {
         @include media($breakpoint) {
             width: auto;
             flex-basis: auto;
@@ -28,11 +30,13 @@
 }
 
 @mixin size-grow($breakpoint: false) {
-    @if $breakpoint == false {
+    @if $breakpoint==false {
         flex-grow: 1;
         flex-basis: 0;
         max-width: 100%;
-    } @else {
+    }
+
+    @else {
         @include media($breakpoint) {
             flex-grow: 1;
             flex-basis: 0;
@@ -43,11 +47,13 @@
 }
 
 @mixin size-of($number-of-columns: $max-number-of-columns, $breakpoint: false, $gutters: true) {
-    @if $breakpoint == false or $breakpoint == null {
+    @if $breakpoint==false or $breakpoint==null {
         max-width: column-width($number-of-columns, $gutters);
         flex-basis: column-width($number-of-columns, $gutters);
         flex-grow: 0;
-    } @else {
+    }
+
+    @else {
         @include media($breakpoint) {
             max-width: column-width($number-of-columns, $gutters);
             flex-basis: column-width($number-of-columns, $gutters);
@@ -59,16 +65,17 @@
 
 @mixin make-column {
     @include column;
-    
+
     $size: 1;
-    @each $breakpoint in $breakpoints {
+
+    @each $breakpoint,
+    $width in $breakpoints {
         @include size-auto($breakpoint);
         @include size-grow($breakpoint);
 
         @while ($max-number-of-columns > $size) {
             @include size-of($size, $breakpoint);
+            $size: $size + 1;
         }
-
-        $size: $size + 1;
     }
 }
