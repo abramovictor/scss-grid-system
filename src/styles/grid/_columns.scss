@@ -63,18 +63,55 @@
     }
 }
 
-@mixin make-column {
-    @include column;
+@mixin make-column-auto {
+    .#{map-get($classnames, column)} {
+        @include column();
+    }
 
-    $size: 1;
+    .#{map-get($classnames, column-auto)} {
+        @include size-auto();
+    }
 
     @each $breakpoint,
     $width in $breakpoints {
-        @include size-auto($breakpoint);
-        @include size-grow($breakpoint);
+        .#{map-get($classnames, column-auto)}-#{$breakpoint} {
+            @include size-auto($breakpoint);
+        }
+    }
+}
 
-        @while ($max-number-of-columns > $size) {
-            @include size-of($size, $breakpoint);
+@mixin make-column-grow {
+    .#{map-get($classnames, column)} {
+        @include column();
+    }
+
+    .#{map-get($classnames, column-grow)} {
+        @include size-grow();
+    }
+
+    @each $breakpoint,
+    $width in $breakpoints {
+        .#{map-get($classnames, column-grow)}-#{$breakpoint} {
+            @include size-grow($breakpoint);
+        }
+    }
+}
+
+@mixin make-column-of {
+    .#{map-get($classnames, column)} {
+        @include column();
+    }
+
+    $size: 1;
+    @while ($max-number-of-columns >= $size) {
+        .#{map-get($classnames, column)}#{map-get($classnames, separator)}#{$size} {
+            @include size-of($size);
+        }
+
+        @each $breakpoint, $width in $breakpoints {
+            .#{map-get($classnames, column)}-#{$breakpoint}#{map-get($classnames, separator)}#{$size} {
+                @include size-of($size, $breakpoint);
+            }
             $size: $size + 1;
         }
     }

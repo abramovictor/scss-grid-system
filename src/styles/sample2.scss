@@ -1,7 +1,7 @@
 @import 'grid/index';
 
-$gutters-type: padding; // default parameter
-$mobile-first: true; // default parameter
+// $gutters-type: margin; // default parameter
+// $mobile-first: true; // default parameter
 
 @include normalize;
 

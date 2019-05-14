@@ -4,4 +4,6 @@
 
 @include make-container;
 @include make-row;
-@include make-column;
+@include make-column-of;
+@include make-column-auto;
+@include make-column-grow;
