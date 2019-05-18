@@ -2,6 +2,12 @@
 @import 'make-row';
 @import 'make-columns';
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 @include make-container;
 @include make-container-full-width;
 @include make-row;
