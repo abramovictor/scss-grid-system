@@ -9,18 +9,3 @@
     display: flex;
     flex-wrap: wrap;
 }
-
-@mixin make-row {
-    .#{map-get($classnames, row)} {
-        @include row;
-
-        &#{map-get($classnames, separator)}#{map-get($classnames, no-gutters)} {
-            @include row(false);
-            
-            &>.#{map-get($classnames, column)} {
-                #{$gutters-type}-left: 0;
-                #{$gutters-type}-right: 0;
-            }
-        }
-    }
-}

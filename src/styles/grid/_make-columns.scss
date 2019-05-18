@@ -1,0 +1,60 @@
+@import 'settings';
+@import 'columns';
+
+@mixin make-column {
+    $column: map-get($classnames, column);
+    
+    .#{$column} {
+        @include column();
+    }
+}
+
+@mixin make-column-auto {
+    $column-auto: map-get($classnames, column-auto);
+    $separator: map-get($classnames, separator);
+
+    .#{$column-auto} {
+        @include size-auto();
+    }
+
+    @each $breakpoint, $width in $breakpoints {
+        .#{$column-auto}#{$separator}#{$breakpoint} {
+            @include size-auto($breakpoint);
+        }
+    }
+}
+
+@mixin make-column-grow {
+    $column-grow: map-get($classnames, column-grow);
+    $separator: map-get($classnames, separator);
+
+    .#{$column-grow} {
+        @include size-grow();
+    }
+
+    @each $breakpoint, $width in $breakpoints {
+        .#{$column-grow}#{$separator}#{$breakpoint} {
+            @include size-grow($breakpoint);
+        }
+    }
+}
+
+@mixin make-column-of {
+    $column-of: map-get($classnames, column-of);
+    $separator: map-get($classnames, separator);
+
+    $size: 1;
+    @while ($max-number-of-columns >= $size) {
+        .#{$column-of}-#{$size} {
+            @include size-of($size);
+        }
+
+        @each $breakpoint, $width in $breakpoints {
+            .#{$column-of}-#{$size}#{$separator}#{$breakpoint} {
+                @include size-of($size, $breakpoint);
+            }
+        }
+
+        $size: $size + 1;
+    }
+}

@@ -1,0 +1,20 @@
+@import 'settings';
+@import 'container';
+
+@mixin make-container {
+    $container: map-get($classnames, container);
+
+    .#{$container} {
+        @include container;
+    }
+}
+
+@mixin make-container-full-width {
+    $container: map-get($classnames, container);
+    $separator: map-get($classnames, separator);
+    $full-width: map-get($classnames, full-width);
+
+    .#{$container}#{$separator}#{$full-width} {
+        @include container(true);
+    }
+}

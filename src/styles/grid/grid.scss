@@ -1,9 +1,11 @@
-@import 'container';
-@import 'row';
-@import 'columns';
+@import 'make-container';
+@import 'make-row';
+@import 'make-columns';
 
 @include make-container;
+@include make-container-full-width;
 @include make-row;
+@include make-row-no-gutters;
 @include make-column-of;
 @include make-column-auto;
 @include make-column-grow;

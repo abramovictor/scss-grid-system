@@ -1,0 +1,26 @@
+@import 'settings';
+@import 'row';
+
+@mixin make-row {
+    $row: map-get($classnames, row);
+
+    .#{$row} {
+        @include row;
+    }
+}
+
+@mixin make-row-no-gutters {
+    $row: map-get($classnames, row);
+    $separator: map-get($classnames, separator);
+    $no-gutters: map-get($classnames, no-gutters);
+    $column: map-get($classnames, column);
+    
+    .#{$row}#{$separator}#{$no-gutters} {
+        @include row(false);
+        
+        &>.#{$column} {
+            #{$gutters-type}-left: 0;
+            #{$gutters-type}-right: 0;
+        }
+    }
+}

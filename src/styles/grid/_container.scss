@@ -33,16 +33,3 @@
         }
     }
 }
-
-@mixin make-container {
-    $container: map-get($classnames, container);
-    $separator: map-get($classnames, separator);
-    $full-width: map-get($classnames, full-width);
-
-    .#{$container} {
-        @include container;
-    }
-    .#{$container}#{$separator}#{$full-width} {
-        @include container(true);
-    }
-}
