@@ -65,13 +65,8 @@
 // }
 
 // $gutters-type: padding;
-// *,
-// *::before,
-// *::after {
-//     box-sizing: border-box;
-// }
-
 // $mobile-first: false;
+
 // .row {
 //     @include row;
 //     @include media(xl) {
@@ -83,19 +78,15 @@
 //     background-color: lime;
 //     @include column() {
 //         @include size-of(3) {
-//             // media content
 //             background-color: limegreen;
 //         }
 //         @include size-of(4, xl) {
-//             // media content
 //             background-color: green;
 //         }
 //         @include size-of(6, lg) {
-//             // media content
 //             background-color: tomato;
 //         }
 //         @include size-of(9, md) {
-//             // media content
 //             background-color: red;
 //         }
 //         @include size-of(12, sm) {
