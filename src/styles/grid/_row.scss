@@ -15,9 +15,8 @@
         @include row;
 
         &#{map-get($classnames, separator)}#{map-get($classnames, no-gutters)} {
-            margin-left: 0;
-            margin-right: 0;
-    
+            @include row(false);
+            
             &>.#{map-get($classnames, column)} {
                 #{$gutters-type}-left: 0;
                 #{$gutters-type}-right: 0;

@@ -63,56 +63,62 @@
     }
 }
 
-@mixin make-column-auto {
-    .#{map-get($classnames, column)} {
+// Make column mixins
+
+@mixin make-column {
+    $column: map-get($classnames, column);
+    
+    .#{$column} {
         @include column();
     }
+}
 
-    .#{map-get($classnames, column-auto)} {
+@mixin make-column-auto {
+    $column-auto: map-get($classnames, column-auto);
+    $separator: map-get($classnames, separator);
+
+    .#{$column-auto} {
         @include size-auto();
     }
 
-    @each $breakpoint,
-    $width in $breakpoints {
-        .#{map-get($classnames, column-auto)}-#{$breakpoint} {
+    @each $breakpoint, $width in $breakpoints {
+        .#{$column-auto}#{$separator}#{$breakpoint} {
             @include size-auto($breakpoint);
         }
     }
 }
 
 @mixin make-column-grow {
-    .#{map-get($classnames, column)} {
-        @include column();
-    }
+    $column-grow: map-get($classnames, column-grow);
+    $separator: map-get($classnames, separator);
 
-    .#{map-get($classnames, column-grow)} {
+    .#{$column-grow} {
         @include size-grow();
     }
 
-    @each $breakpoint,
-    $width in $breakpoints {
-        .#{map-get($classnames, column-grow)}-#{$breakpoint} {
+    @each $breakpoint, $width in $breakpoints {
+        .#{$column-grow}#{$separator}#{$breakpoint} {
             @include size-grow($breakpoint);
         }
     }
 }
 
 @mixin make-column-of {
-    .#{map-get($classnames, column)} {
-        @include column();
-    }
+    $column-of: map-get($classnames, column-of);
+    $separator: map-get($classnames, separator);
 
     $size: 1;
     @while ($max-number-of-columns >= $size) {
-        .#{map-get($classnames, column)}#{map-get($classnames, separator)}#{$size} {
+        .#{$column-of}-#{$size} {
             @include size-of($size);
         }
 
         @each $breakpoint, $width in $breakpoints {
-            .#{map-get($classnames, column)}-#{$breakpoint}#{map-get($classnames, separator)}#{$size} {
+            .#{$column-of}-#{$size}#{$separator}#{$breakpoint} {
                 @include size-of($size, $breakpoint);
             }
-            $size: $size + 1;
         }
+
+        $size: $size + 1;
     }
 }
